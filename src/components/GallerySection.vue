@@ -40,11 +40,12 @@
 import { ref } from 'vue'
 
 // Add images to /public/gallery/ — drop .jpg/.png files there and list them here.
-// No rebuild needed when swapping images in /public/.
+// import.meta.env.BASE_URL picks up the Vite base (/bryllupsmoent.dk/ in production).
+const base = import.meta.env.BASE_URL
 const images = [
-  { src: '/gallery/gallery-1.jpg', alt: 'Klar til hammerslag – møntprægningsmaskinen på huggestubben' },
-  { src: '/gallery/gallery-2.jpg', alt: 'Opstillingen klar – møntprægningsmaskine og hammer på huggestubbe' },
-  { src: '/gallery/gallery-3.jpg', alt: 'Hammerslaget – møntprægneren i fuld sving' },
+  { src: `${base}gallery/gallery-1.jpg`, alt: 'Klar til hammerslag – møntprægningsmaskinen på huggestubben' },
+  { src: `${base}gallery/gallery-2.jpg`, alt: 'Opstillingen klar – møntprægningsmaskine og hammer på huggestubbe' },
+  { src: `${base}gallery/gallery-3.jpg`, alt: 'Hammerslaget – møntprægneren i fuld sving' },
 ]
 
 const lightboxIndex = ref(null)
