@@ -34,7 +34,10 @@
             <label for="message">Besked</label>
             <textarea id="message" v-model="form.message" rows="5" placeholder="Fortæl os om jeres bryllup og ønsker..."></textarea>
           </div>
-          <button type="submit" class="btn btn-primary btn-full">
+          <div v-if="submitted" class="form-success">
+            ✅ Tak! Din emailklient åbner nu — tryk blot Send for at sende beskeden.
+          </div>
+          <button v-else type="submit" class="btn btn-primary btn-full">
             Send Forespørgsel
           </button>
         </form>
@@ -43,7 +46,7 @@
             <span class="contact-icon">📧</span>
             <div>
               <strong>Email</strong>
-              <a href="mailto:info@bryllupsmoent.dk">info@bryllupsmoent.dk</a>
+              <a href="mailto:kontakt@bryllupsmønt.dk">kontakt@bryllupsmønt.dk</a>
             </div>
           </div>
           <div class="contact-item">
@@ -80,9 +83,17 @@ const form = reactive({
 const submitted = ref(false)
 
 const handleSubmit = () => {
+  const subject = encodeURIComponent(`Bryllupsforespørgsel fra ${form.name}`)
+  const body = encodeURIComponent(
+    `Navn: ${form.name}\nEmail: ${form.email}` +
+    (form.date ? `\nBryllupsdato: ${form.date}` : '') +
+    (form.guests ? `\nAntal gæster: ${form.guests}` : '') +
+    (form.message ? `\n\nBesked:\n${form.message}` : '')
+  )
+  window.location.href = `mailto:kontakt@bryllupsmønt.dk?subject=${subject}&body=${body}`
   submitted.value = true
-  alert('Tak for din henvendelse! Vi vender tilbage snarest.')
   Object.assign(form, { name: '', email: '', date: '', guests: '', message: '' })
+  setTimeout(() => { submitted.value = false }, 6000)
 }
 </script>
 
@@ -148,6 +159,17 @@ textarea {
 .btn-full {
   width: 100%;
   justify-content: center;
+}
+
+.form-success {
+  width: 100%;
+  padding: 1rem 1.25rem;
+  background: #f0faf0;
+  border: 1.5px solid #a8d5a2;
+  border-radius: 8px;
+  color: #2d6a27;
+  font-size: 0.95rem;
+  text-align: center;
 }
 
 .contact-info {
