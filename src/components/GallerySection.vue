@@ -1,0 +1,226 @@
+<template>
+  <section class="section gallery" id="galleri">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">I Aktion</span>
+        <h2>Se Det Ske</h2>
+        <p class="section-intro">
+          Oplev processen med egne øjne – fra hammerslag til håndlavet minde.
+        </p>
+      </div>
+
+      <div class="gallery-grid" :class="`gallery-grid--${images.length}`">
+        <div
+          v-for="(image, i) in images"
+          :key="i"
+          class="gallery-item"
+          @click="openLightbox(i)"
+        >
+          <img :src="image.src" :alt="image.alt" loading="lazy" />
+          <div class="gallery-overlay">
+            <span class="gallery-zoom">⊕</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Lightbox -->
+    <Teleport to="body">
+      <div v-if="lightboxIndex !== null" class="lightbox" @click.self="closeLightbox">
+        <button class="lightbox-close" @click="closeLightbox">✕</button>
+        <button v-if="images.length > 1" class="lightbox-prev" @click="prevImage">‹</button>
+        <img :src="images[lightboxIndex].src" :alt="images[lightboxIndex].alt" class="lightbox-img" />
+        <button v-if="images.length > 1" class="lightbox-next" @click="nextImage">›</button>
+      </div>
+    </Teleport>
+  </section>
+</template>
+
+<script setup>
+import { ref } from 'vue'
+
+// Add images to /public/gallery/ — drop .jpg/.png files there and list them here.
+// No rebuild needed when swapping images in /public/.
+const images = [
+  { src: '/gallery/gallery-1.jpg', alt: 'Klar til hammerslag – møntprægningsmaskinen på huggestubben' },
+  { src: '/gallery/gallery-2.jpg', alt: 'Opstillingen klar – møntprægningsmaskine og hammer på huggestubbe' },
+  { src: '/gallery/gallery-3.jpg', alt: 'Hammerslaget – møntprægneren i fuld sving' },
+]
+
+const lightboxIndex = ref(null)
+
+function openLightbox(i) {
+  lightboxIndex.value = i
+  document.body.style.overflow = 'hidden'
+}
+
+function closeLightbox() {
+  lightboxIndex.value = null
+  document.body.style.overflow = ''
+}
+
+function prevImage() {
+  lightboxIndex.value = (lightboxIndex.value - 1 + images.length) % images.length
+}
+
+function nextImage() {
+  lightboxIndex.value = (lightboxIndex.value + 1) % images.length
+}
+</script>
+
+<style scoped>
+.gallery {
+  background: var(--color-cream);
+}
+
+/* ── Grid layouts ── */
+.gallery-grid {
+  display: grid;
+  gap: 1rem;
+  margin-top: 3rem;
+}
+
+.gallery-grid--1 {
+  grid-template-columns: 1fr;
+  max-width: 700px;
+  margin-inline: auto;
+}
+
+.gallery-grid--2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.gallery-grid--3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.gallery-grid--4,
+.gallery-grid--5,
+.gallery-grid--6 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+@media (min-width: 768px) {
+  .gallery-grid--4,
+  .gallery-grid--5,
+  .gallery-grid--6 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* ── Item ── */
+.gallery-item {
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
+  cursor: pointer;
+  aspect-ratio: 3 / 4;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  background: var(--color-border);
+}
+
+.gallery-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease;
+}
+
+.gallery-item:hover img {
+  transform: scale(1.04);
+}
+
+.gallery-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(124, 45, 68, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.gallery-item:hover .gallery-overlay {
+  opacity: 1;
+}
+
+.gallery-zoom {
+  color: white;
+  font-size: 2.5rem;
+  line-height: 1;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.4);
+}
+
+/* ── Lightbox ── */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 5, 10, 0.92);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lightbox-img {
+  max-width: 90vw;
+  max-height: 88vh;
+  border-radius: 8px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+  object-fit: contain;
+}
+
+.lightbox-close,
+.lightbox-prev,
+.lightbox-next {
+  position: fixed;
+  background: rgba(255,255,255,0.12);
+  border: none;
+  color: white;
+  cursor: pointer;
+  font-size: 1.75rem;
+  border-radius: 50%;
+  width: 3rem;
+  height: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+  backdrop-filter: blur(4px);
+}
+
+.lightbox-close:hover,
+.lightbox-prev:hover,
+.lightbox-next:hover {
+  background: rgba(255,255,255,0.25);
+}
+
+.lightbox-close {
+  top: 1.25rem;
+  right: 1.25rem;
+  font-size: 1.1rem;
+}
+
+.lightbox-prev {
+  left: 1.25rem;
+  font-size: 2.25rem;
+}
+
+.lightbox-next {
+  right: 1.25rem;
+  font-size: 2.25rem;
+}
+
+@media (max-width: 600px) {
+  .gallery-grid--3 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .gallery-grid--3 .gallery-item:first-child {
+    grid-column: 1 / -1;
+    aspect-ratio: 4 / 3;
+  }
+}
+</style>

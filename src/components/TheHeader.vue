@@ -45,6 +45,7 @@ const scrollTo = (id) => {
         <ul>
           <li><a href="#hjem" @click.prevent="scrollTo('hjem')">Hjem</a></li>
           <li><a href="#om-os" @click.prevent="scrollTo('om-os')">Om Os</a></li>
+          <li><a href="#galleri" @click.prevent="scrollTo('galleri')">Galleri</a></li>
           <li><a href="#priser" @click.prevent="scrollTo('priser')">Priser</a></li>
           <li><a href="#kontakt" @click.prevent="scrollTo('kontakt')">Kontakt</a></li>
         </ul>
