@@ -2,6 +2,7 @@
 import TheHeader from './components/TheHeader.vue'
 import TheHero from './components/TheHero.vue'
 import AboutSection from './components/AboutSection.vue'
+import GallerySection from './components/GallerySection.vue'
 import ServicesSection from './components/ServicesSection.vue'
 import PricingSection from './components/PricingSection.vue'
 import ContactSection from './components/ContactSection.vue'
@@ -13,6 +14,7 @@ import TheFooter from './components/TheFooter.vue'
   <main>
     <TheHero />
     <AboutSection />
+    <GallerySection />
     <ServicesSection />
     <PricingSection />
     <ContactSection />
