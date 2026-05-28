@@ -5,7 +5,7 @@
         <span class="section-label">Om Os</span>
         <h2>En Tradition Med Et Moderne Twist</h2>
         <p class="section-intro">
-          Vi specialiserer os i at skabe personlige møntprægningstjenester, der giver jeres bryllupsdag et unikt præg.
+          Vi specialiserer os i at skabe personlige mønter, der giver jeres bryllupsdag et unikt præg.
           Vores mobile møntprægningsmaskine kommer direkte til jeres bryllup.
         </p>
       </div>
@@ -24,18 +24,18 @@
 const features = [
   {
     icon: '🪙',
-    title: 'Håndlavede Møntprægningsmaskiner',
-    text: 'Vores vintage møntprægningsmaskiner er restaureret med omhu og skaber autentiske, håndlavede erindringsskilte.'
+    title: 'Møntprægningsmaskiner',
+    text: 'Vores møntprægningsmaskiner er vedligeholdt med omhu og skaber autentiske erindringer til jeres bryllupsdag.'
   },
   {
     icon: '💍',
     title: 'Personligt til Jeres Dag',
-    text: 'Hvert design er speciallavet til jer – med jeres navne, dato og et motiv der afspejler jeres kærlighedshistorie.'
+    text: 'Jeres mønt er designet til jer - med jeres navne, dato og et motiv, der hjælper med at huske den store dag.'
   },
   {
     icon: '🎪',
-    title: 'Mobile Tjenester',
-    text: 'Vi kommer direkte til jeres bryllupslokation, hvad enten det er en slotshal, have eller restaurantvenue.'
+    title: 'Område: Sjælland',
+    text: 'Vi betjener bryllupper på Sjælland og kommer direkte til jeres valgte venue. Kontakt os for tilbud, hvis jeres bryllup er uden for Sjælland.'
   },
   {
     icon: '🎁',
