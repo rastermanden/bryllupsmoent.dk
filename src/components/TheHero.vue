@@ -7,7 +7,7 @@
       <h1>Din Personlige<br><span>Bryllupsmønt</span></h1>
       <p class="hero-subtitle">
         Skab et unikt og uforglemmeligt minde fra jeres store dag.<br>
-        Håndlavede møntprægningstjenester til dit bryllup.
+        Lav jeres egen bryllupsmønt.
       </p>
       <div class="hero-actions">
         <a href="#priser" @click.prevent="scrollTo('priser')" class="btn btn-primary">Se Priser</a>

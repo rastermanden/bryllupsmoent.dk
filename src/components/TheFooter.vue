@@ -14,6 +14,9 @@
         <a href="#priser" @click.prevent="scrollTo('priser')">Priser</a>
         <a href="#kontakt" @click.prevent="scrollTo('kontakt')">Kontakt</a>
       </nav>
+      <p class="footer-company">
+        Bryllupsmønt I/S · CVR 4645 3352 · <a href="mailto:kontakt@bryllupsmønt.dk">kontakt@bryllupsmønt.dk</a>
+      </p>
       <p class="footer-copy">
         © {{ new Date().getFullYear() }} Bryllupsmønt.dk – Alle rettigheder forbeholdes.
       </p>
@@ -81,6 +84,21 @@ footer {
 }
 
 .footer-nav a:hover {
+  color: var(--color-gold);
+}
+
+.footer-company {
+  color: rgba(255,255,255,0.55);
+  font-size: 0.85rem;
+  margin: 0;
+}
+
+.footer-company a {
+  color: rgba(255,255,255,0.65);
+  text-decoration: none;
+}
+
+.footer-company a:hover {
   color: var(--color-gold);
 }
 

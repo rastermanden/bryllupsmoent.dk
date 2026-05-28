@@ -36,8 +36,8 @@ const services = [
   },
   {
     icon: '📦',
-    title: 'Pakkeløsninger',
-    description: 'Komplette pakker inklusive smuk præsentationsæske, personligt certifikat og valgfri indgravering.'
+    title: 'Pakkeløsning',
+    description: 'Én klar pakke: brudeparrets sølvmønt, op til 50 kobbermønter til gæsterne, 1 unikt design og 2 timers tilstedeværelse. Kontakt os, hvis I ønsker noget anderledes.'
   },
   {
     icon: '🚚',
