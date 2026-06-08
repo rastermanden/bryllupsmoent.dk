@@ -27,21 +27,18 @@ async function optimizeGallery() {
     // Full-size WebP (for lightbox)
     const fullWebp = path.join(GALLERY_SRC, `${base}.webp`)
     await sharp(src)
-      .rotate()
       .webp({ quality: WEBP_QUALITY })
       .toFile(fullWebp)
 
     // Re-compress original JPEG as fallback
     const fullJpeg = path.join(GALLERY_SRC, `${base}-opt.jpg`)
     await sharp(src)
-      .rotate()
       .jpeg({ quality: JPEG_QUALITY, progressive: true })
       .toFile(fullJpeg)
 
     // Thumbnail WebP (for grid)
     const thumbWebp = path.join(thumbDir, `${base}.webp`)
     await sharp(src)
-      .rotate()
       .resize({ width: THUMB_WIDTH, withoutEnlargement: true })
       .webp({ quality: WEBP_QUALITY })
       .toFile(thumbWebp)
@@ -49,7 +46,6 @@ async function optimizeGallery() {
     // Thumbnail JPEG fallback
     const thumbJpeg = path.join(thumbDir, `${base}.jpg`)
     await sharp(src)
-      .rotate()
       .resize({ width: THUMB_WIDTH, withoutEnlargement: true })
       .jpeg({ quality: JPEG_QUALITY, progressive: true })
       .toFile(thumbJpeg)
