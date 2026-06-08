@@ -16,7 +16,10 @@
           class="gallery-item"
           @click="openLightbox(i)"
         >
-          <img :src="image.src" :alt="image.alt" loading="lazy" />
+          <picture>
+            <source :srcset="image.thumbWebp" type="image/webp" />
+            <img :src="image.thumbJpg" :alt="image.alt" loading="lazy" decoding="async" />
+          </picture>
           <div class="gallery-overlay">
             <span class="gallery-zoom">⊕</span>
           </div>
@@ -29,7 +32,10 @@
       <div v-if="lightboxIndex !== null" class="lightbox" @click.self="closeLightbox">
         <button class="lightbox-close" @click="closeLightbox">✕</button>
         <button v-if="images.length > 1" class="lightbox-prev" @click="prevImage">‹</button>
-        <img :src="images[lightboxIndex].src" :alt="images[lightboxIndex].alt" class="lightbox-img" />
+        <picture>
+          <source :srcset="images[lightboxIndex].fullWebp" type="image/webp" />
+          <img :src="images[lightboxIndex].fullJpg" :alt="images[lightboxIndex].alt" class="lightbox-img" />
+        </picture>
         <button v-if="images.length > 1" class="lightbox-next" @click="nextImage">›</button>
       </div>
     </Teleport>
@@ -39,13 +45,32 @@
 <script setup>
 import { ref } from 'vue'
 
-// Add images to /public/gallery/ — drop .jpg/.png files there and list them here.
+// Add images to /public/gallery/ and run `npm run optimize-images` to generate
+// WebP + thumbnail variants, then list them here.
 // import.meta.env.BASE_URL picks up the Vite base (/bryllupsmoent.dk/ in production).
 const base = import.meta.env.BASE_URL
 const images = [
-  { src: `${base}gallery/gallery-1.jpg`, alt: 'Klar til hammerslag – møntprægningsmaskinen på huggestubben' },
-  { src: `${base}gallery/gallery-2.jpg`, alt: 'Opstillingen klar – møntprægningsmaskine og hammer på huggestubbe' },
-  { src: `${base}gallery/gallery-3.jpg`, alt: 'Hammerslaget – møntprægneren i fuld sving' },
+  {
+    thumbWebp: `${base}gallery/thumbs/gallery-1.webp`,
+    thumbJpg:  `${base}gallery/thumbs/gallery-1.jpg`,
+    fullWebp:  `${base}gallery/gallery-1.webp`,
+    fullJpg:   `${base}gallery/gallery-1-opt.jpg`,
+    alt: 'Klar til hammerslag – møntprægningsmaskinen på huggestubben',
+  },
+  {
+    thumbWebp: `${base}gallery/thumbs/gallery-2.webp`,
+    thumbJpg:  `${base}gallery/thumbs/gallery-2.jpg`,
+    fullWebp:  `${base}gallery/gallery-2.webp`,
+    fullJpg:   `${base}gallery/gallery-2-opt.jpg`,
+    alt: 'Opstillingen klar – møntprægningsmaskine og hammer på huggestubbe',
+  },
+  {
+    thumbWebp: `${base}gallery/thumbs/gallery-3.webp`,
+    thumbJpg:  `${base}gallery/thumbs/gallery-3.jpg`,
+    fullWebp:  `${base}gallery/gallery-3.webp`,
+    fullJpg:   `${base}gallery/gallery-3-opt.jpg`,
+    alt: 'Hammerslaget – møntprægneren i fuld sving',
+  },
 ]
 
 const lightboxIndex = ref(null)
