@@ -24,6 +24,10 @@ async function optimizeGallery() {
     const thumbDir = path.join(GALLERY_SRC, 'thumbs')
     if (!existsSync(thumbDir)) await mkdir(thumbDir, { recursive: true })
 
+    // NOTE: do NOT call .rotate() — source pixels are already correctly oriented.
+    // The EXIF orientation tag is misleading; applying it would rotate good images.
+    // sharp strips EXIF by default on conversion, which is the correct behaviour here.
+
     // Full-size WebP (for lightbox)
     const fullWebp = path.join(GALLERY_SRC, `${base}.webp`)
     await sharp(src)
