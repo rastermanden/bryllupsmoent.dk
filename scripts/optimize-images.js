@@ -10,7 +10,7 @@ const JPEG_QUALITY = 85
 
 async function optimizeGallery() {
   const files = (await readdir(GALLERY_SRC))
-    .filter(f => /\.(jpe?g|png)$/i.test(f))
+    .filter(f => /\.(jpe?g|png)$/i.test(f) && !f.endsWith('-opt.jpg'))
 
   if (files.length === 0) {
     console.log('No images found in', GALLERY_SRC)
