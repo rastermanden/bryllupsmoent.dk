@@ -1,0 +1,35 @@
+name: Optimize gallery images
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'public/gallery/*.jpg'
+      - 'public/gallery/*.jpeg'
+      - 'public/gallery/*.png'
+
+jobs:
+  optimize:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - run: npm ci
+
+      - run: npm run optimize-images
+
+      - name: Commit generated files
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add public/gallery/*.webp public/gallery/*-opt.jpg public/gallery/thumbs/
+          git diff --staged --quiet || git commit -m "chore: auto-optimize gallery images [skip ci]"
+          git push
