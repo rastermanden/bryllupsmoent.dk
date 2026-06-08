@@ -24,21 +24,28 @@ async function optimizeGallery() {
     const thumbDir = path.join(GALLERY_SRC, 'thumbs')
     if (!existsSync(thumbDir)) await mkdir(thumbDir, { recursive: true })
 
+    // .rotate() reads EXIF orientation and bakes it into pixels, then strips
+    // the EXIF tag. Needed because WebP/JPEG output strips EXIF by default,
+    // which would leave raw (rotated) pixels with no orientation hint.
+
     // Full-size WebP (for lightbox)
     const fullWebp = path.join(GALLERY_SRC, `${base}.webp`)
     await sharp(src)
+      .rotate()
       .webp({ quality: WEBP_QUALITY })
       .toFile(fullWebp)
 
     // Re-compress original JPEG as fallback
     const fullJpeg = path.join(GALLERY_SRC, `${base}-opt.jpg`)
     await sharp(src)
+      .rotate()
       .jpeg({ quality: JPEG_QUALITY, progressive: true })
       .toFile(fullJpeg)
 
     // Thumbnail WebP (for grid)
     const thumbWebp = path.join(thumbDir, `${base}.webp`)
     await sharp(src)
+      .rotate()
       .resize({ width: THUMB_WIDTH, withoutEnlargement: true })
       .webp({ quality: WEBP_QUALITY })
       .toFile(thumbWebp)
@@ -46,15 +53,10 @@ async function optimizeGallery() {
     // Thumbnail JPEG fallback
     const thumbJpeg = path.join(thumbDir, `${base}.jpg`)
     await sharp(src)
+      .rotate()
       .resize({ width: THUMB_WIDTH, withoutEnlargement: true })
       .jpeg({ quality: JPEG_QUALITY, progressive: true })
       .toFile(thumbJpeg)
-
-    const [origStat, fullStat, thumbStat] = await Promise.all([
-      sharp(src).metadata(),
-      sharp(fullWebp).metadata(),
-      sharp(thumbWebp).metadata(),
-    ])
 
     const origSize = (await import('fs')).statSync(src).size
     const fullSize = (await import('fs')).statSync(fullWebp).size

@@ -49,26 +49,27 @@ import { ref } from 'vue'
 // WebP + thumbnail variants, then list them here.
 // import.meta.env.BASE_URL picks up the Vite base (/bryllupsmoent.dk/ in production).
 const base = import.meta.env.BASE_URL
+const V = '?v=2'
 const images = [
   {
-    thumbWebp: `${base}gallery/thumbs/gallery-1.webp`,
-    thumbJpg:  `${base}gallery/thumbs/gallery-1.jpg`,
-    fullWebp:  `${base}gallery/gallery-1.webp`,
-    fullJpg:   `${base}gallery/gallery-1-opt.jpg`,
+    thumbWebp: `${base}gallery/thumbs/gallery-1.webp${V}`,
+    thumbJpg:  `${base}gallery/thumbs/gallery-1.jpg${V}`,
+    fullWebp:  `${base}gallery/gallery-1.webp${V}`,
+    fullJpg:   `${base}gallery/gallery-1-opt.jpg${V}`,
     alt: 'Klar til hammerslag – møntprægningsmaskinen på huggestubben',
   },
   {
-    thumbWebp: `${base}gallery/thumbs/gallery-2.webp`,
-    thumbJpg:  `${base}gallery/thumbs/gallery-2.jpg`,
-    fullWebp:  `${base}gallery/gallery-2.webp`,
-    fullJpg:   `${base}gallery/gallery-2-opt.jpg`,
+    thumbWebp: `${base}gallery/thumbs/gallery-2.webp${V}`,
+    thumbJpg:  `${base}gallery/thumbs/gallery-2.jpg${V}`,
+    fullWebp:  `${base}gallery/gallery-2.webp${V}`,
+    fullJpg:   `${base}gallery/gallery-2-opt.jpg${V}`,
     alt: 'Opstillingen klar – møntprægningsmaskine og hammer på huggestubbe',
   },
   {
-    thumbWebp: `${base}gallery/thumbs/gallery-3.webp`,
-    thumbJpg:  `${base}gallery/thumbs/gallery-3.jpg`,
-    fullWebp:  `${base}gallery/gallery-3.webp`,
-    fullJpg:   `${base}gallery/gallery-3-opt.jpg`,
+    thumbWebp: `${base}gallery/thumbs/gallery-3.webp${V}`,
+    thumbJpg:  `${base}gallery/thumbs/gallery-3.jpg${V}`,
+    fullWebp:  `${base}gallery/gallery-3.webp${V}`,
+    fullJpg:   `${base}gallery/gallery-3-opt.jpg${V}`,
     alt: 'Hammerslaget – møntprægneren i fuld sving',
   },
 ]
