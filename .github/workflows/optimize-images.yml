@@ -1,6 +1,7 @@
 name: Optimize gallery images
 
 on:
+  workflow_dispatch:
   push:
     paths:
       - 'public/gallery/*.jpg'
