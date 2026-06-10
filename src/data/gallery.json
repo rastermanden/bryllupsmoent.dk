@@ -1,0 +1,32 @@
+[
+  {
+    "name": "gallery-1",
+    "enabled": true,
+    "alt": "Klar til hammerslag – møntprægningsmaskinen på huggestubben"
+  },
+  {
+    "name": "gallery-2",
+    "enabled": true,
+    "alt": "Opstillingen klar – møntprægningsmaskine og hammer på huggestubbe"
+  },
+  {
+    "name": "gallery-3",
+    "enabled": true,
+    "alt": "Hammerslaget – møntprægneren i fuld sving"
+  },
+  {
+    "name": "b2",
+    "enabled": true,
+    "alt": "Gommen svinger hammeren over møntprægningsstemplet på huggestubben"
+  },
+  {
+    "name": "h2",
+    "enabled": true,
+    "alt": "Bruden præger sin egen bryllupsmønt med hammerslag"
+  },
+  {
+    "name": "m",
+    "enabled": false,
+    "alt": "Færdigprægede bryllupsmønter med portræt og navne ved siden af prægestemplerne"
+  }
+]
