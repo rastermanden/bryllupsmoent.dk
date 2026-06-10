@@ -44,56 +44,24 @@
 
 <script setup>
 import { ref } from 'vue'
+import galleryData from '../data/gallery.json'
 
-// Add images to /public/gallery/ and run `npm run optimize-images` to generate
-// WebP + thumbnail variants, then list them here.
+// Gallery images are configured in src/data/gallery.json — set "enabled" to
+// true/false to show/hide an image. To add a new image: drop it in
+// /public/gallery/, run `npm run optimize-images` to generate WebP + thumbnail
+// variants, then add an entry with its base name (without extension).
 // import.meta.env.BASE_URL picks up the Vite base (/bryllupsmoent.dk/ in production).
 const base = import.meta.env.BASE_URL
 const V = '?v=2'
-const images = [
-  {
-    thumbWebp: `${base}gallery/thumbs/gallery-1.webp${V}`,
-    thumbJpg:  `${base}gallery/thumbs/gallery-1.jpg${V}`,
-    fullWebp:  `${base}gallery/gallery-1.webp${V}`,
-    fullJpg:   `${base}gallery/gallery-1-opt.jpg${V}`,
-    alt: 'Klar til hammerslag – møntprægningsmaskinen på huggestubben',
-  },
-  {
-    thumbWebp: `${base}gallery/thumbs/gallery-2.webp${V}`,
-    thumbJpg:  `${base}gallery/thumbs/gallery-2.jpg${V}`,
-    fullWebp:  `${base}gallery/gallery-2.webp${V}`,
-    fullJpg:   `${base}gallery/gallery-2-opt.jpg${V}`,
-    alt: 'Opstillingen klar – møntprægningsmaskine og hammer på huggestubbe',
-  },
-  {
-    thumbWebp: `${base}gallery/thumbs/gallery-3.webp${V}`,
-    thumbJpg:  `${base}gallery/thumbs/gallery-3.jpg${V}`,
-    fullWebp:  `${base}gallery/gallery-3.webp${V}`,
-    fullJpg:   `${base}gallery/gallery-3-opt.jpg${V}`,
-    alt: 'Hammerslaget – møntprægneren i fuld sving',
-  },
-  {
-    thumbWebp: `${base}gallery/thumbs/b2.webp${V}`,
-    thumbJpg:  `${base}gallery/thumbs/b2.jpg${V}`,
-    fullWebp:  `${base}gallery/b2.webp${V}`,
-    fullJpg:   `${base}gallery/b2-opt.jpg${V}`,
-    alt: 'Gommen svinger hammeren over møntprægningsstemplet på huggestubben',
-  },
-  {
-    thumbWebp: `${base}gallery/thumbs/h2.webp${V}`,
-    thumbJpg:  `${base}gallery/thumbs/h2.jpg${V}`,
-    fullWebp:  `${base}gallery/h2.webp${V}`,
-    fullJpg:   `${base}gallery/h2-opt.jpg${V}`,
-    alt: 'Bruden præger sin egen bryllupsmønt med hammerslag',
-  },
-  {
-    thumbWebp: `${base}gallery/thumbs/m.webp${V}`,
-    thumbJpg:  `${base}gallery/thumbs/m.jpg${V}`,
-    fullWebp:  `${base}gallery/m.webp${V}`,
-    fullJpg:   `${base}gallery/m-opt.jpg${V}`,
-    alt: 'Færdigprægede bryllupsmønter med portræt og navne ved siden af prægestemplerne',
-  },
-]
+const images = galleryData
+  .filter((img) => img.enabled)
+  .map((img) => ({
+    thumbWebp: `${base}gallery/thumbs/${img.name}.webp${V}`,
+    thumbJpg:  `${base}gallery/thumbs/${img.name}.jpg${V}`,
+    fullWebp:  `${base}gallery/${img.name}.webp${V}`,
+    fullJpg:   `${base}gallery/${img.name}-opt.jpg${V}`,
+    alt: img.alt,
+  }))
 
 const lightboxIndex = ref(null)
 
