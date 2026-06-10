@@ -27,3 +27,7 @@ jobs:
         with:
           folder: dist
           clean-exclude: pr-preview/
+          # Without this the action force-pushes, which can erase a
+          # "Remove preview for PR N" commit pushed by the PR Preview
+          # cleanup job running concurrently after a merge.
+          force: false
