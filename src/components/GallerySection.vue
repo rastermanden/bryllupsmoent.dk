@@ -72,6 +72,27 @@ const images = [
     fullJpg:   `${base}gallery/gallery-3-opt.jpg${V}`,
     alt: 'Hammerslaget – møntprægneren i fuld sving',
   },
+  {
+    thumbWebp: `${base}gallery/thumbs/b2.webp${V}`,
+    thumbJpg:  `${base}gallery/thumbs/b2.jpg${V}`,
+    fullWebp:  `${base}gallery/b2.webp${V}`,
+    fullJpg:   `${base}gallery/b2-opt.jpg${V}`,
+    alt: 'Gommen svinger hammeren over møntprægningsstemplet på huggestubben',
+  },
+  {
+    thumbWebp: `${base}gallery/thumbs/h2.webp${V}`,
+    thumbJpg:  `${base}gallery/thumbs/h2.jpg${V}`,
+    fullWebp:  `${base}gallery/h2.webp${V}`,
+    fullJpg:   `${base}gallery/h2-opt.jpg${V}`,
+    alt: 'Bruden præger sin egen bryllupsmønt med hammerslag',
+  },
+  {
+    thumbWebp: `${base}gallery/thumbs/m.webp${V}`,
+    thumbJpg:  `${base}gallery/thumbs/m.jpg${V}`,
+    fullWebp:  `${base}gallery/m.webp${V}`,
+    fullJpg:   `${base}gallery/m-opt.jpg${V}`,
+    alt: 'Færdigprægede bryllupsmønter med portræt og navne ved siden af prægestemplerne',
+  },
 ]
 
 const lightboxIndex = ref(null)
