@@ -47,6 +47,7 @@ const scrollTo = (id) => {
           <li><a href="#om-os" @click.prevent="scrollTo('om-os')">Om Os</a></li>
           <li><a href="#galleri" @click.prevent="scrollTo('galleri')">Galleri</a></li>
           <li><a href="#priser" @click.prevent="scrollTo('priser')">Priser</a></li>
+          <li><a href="#anmeldelser" @click.prevent="scrollTo('anmeldelser')">Anmeldelser</a></li>
           <li><a href="#kontakt" @click.prevent="scrollTo('kontakt')">Kontakt</a></li>
         </ul>
       </nav>
@@ -187,7 +188,7 @@ header.scrolled .burger span {
   }
 
   nav.open {
-    max-height: 300px;
+    max-height: 400px;
   }
 
   nav ul {

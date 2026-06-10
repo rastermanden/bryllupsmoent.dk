@@ -5,6 +5,7 @@ import AboutSection from './components/AboutSection.vue'
 import GallerySection from './components/GallerySection.vue'
 import ServicesSection from './components/ServicesSection.vue'
 import PricingSection from './components/PricingSection.vue'
+import TestimonialsSection from './components/TestimonialsSection.vue'
 import ContactSection from './components/ContactSection.vue'
 import TheFooter from './components/TheFooter.vue'
 </script>
@@ -17,6 +18,7 @@ import TheFooter from './components/TheFooter.vue'
     <GallerySection />
     <ServicesSection />
     <PricingSection />
+    <TestimonialsSection />
     <ContactSection />
   </main>
   <TheFooter />
