@@ -43,7 +43,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 import galleryData from '../data/gallery.json'
 
 // Gallery images are configured in src/data/gallery.json — set "enabled" to
@@ -64,15 +64,29 @@ const images = galleryData
   }))
 
 const lightboxIndex = ref(null)
+let _pushedState = false
 
 function openLightbox(i) {
   lightboxIndex.value = i
   document.body.style.overflow = 'hidden'
+  history.pushState({ lightbox: true }, '')
+  _pushedState = true
+}
+
+function _closeImmediately() {
+  lightboxIndex.value = null
+  document.body.style.overflow = ''
+  _pushedState = false
 }
 
 function closeLightbox() {
-  lightboxIndex.value = null
-  document.body.style.overflow = ''
+  const shouldGoBack = _pushedState
+  _closeImmediately()
+  if (shouldGoBack) history.back()
+}
+
+function onPopState() {
+  if (lightboxIndex.value !== null) _closeImmediately()
 }
 
 function prevImage() {
@@ -82,6 +96,9 @@ function prevImage() {
 function nextImage() {
   lightboxIndex.value = (lightboxIndex.value + 1) % images.length
 }
+
+onMounted(() => window.addEventListener('popstate', onPopState))
+onUnmounted(() => window.removeEventListener('popstate', onPopState))
 </script>
 
 <style scoped>
