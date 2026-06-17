@@ -24,7 +24,13 @@ jobs:
           node-version: 20
           cache: 'npm'
       - if: github.event.action != 'closed'
-        run: npm ci && npm run build -- --base=/pr-preview/pr-${{ github.event.number }}/
+        # CNAME must not end up inside the preview folder: the cleanup on PR
+        # close rsyncs with --exclude CNAME, so a nested CNAME file would
+        # survive and keep the stale pr-preview/pr-N folder alive forever.
+        run: |
+          npm ci
+          npm run build -- --base=/pr-preview/pr-${{ github.event.number }}/
+          rm -f dist/CNAME
       - uses: rossjrw/pr-preview-action@v1
         with:
           source-dir: dist
