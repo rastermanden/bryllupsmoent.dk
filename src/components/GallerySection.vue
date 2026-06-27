@@ -25,6 +25,23 @@
           </div>
         </div>
       </div>
+
+      <div class="gallery-cta">
+        <p>Se mange flere billeder fra vores arbejde på Instagram.</p>
+        <a
+          class="btn btn-outline-dark"
+          href="https://www.instagram.com/bryllupsmoent"
+          target="_blank"
+          rel="noopener"
+        >
+          <svg class="ig-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <rect x="2.5" y="2.5" width="19" height="19" rx="5.5" />
+            <circle cx="12" cy="12" r="4.2" />
+            <circle cx="17.6" cy="6.4" r="1.3" fill="currentColor" stroke="none" />
+          </svg>
+          Følg os på Instagram
+        </a>
+      </div>
     </div>
 
     <!-- Lightbox -->
@@ -104,6 +121,30 @@ onUnmounted(() => window.removeEventListener('popstate', onPopState))
 <style scoped>
 .gallery {
   background: var(--color-cream);
+}
+
+/* ── Instagram call-to-action ── */
+.gallery-cta {
+  margin-top: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  text-align: center;
+}
+
+.gallery-cta p {
+  color: var(--color-text-light);
+  font-size: 1rem;
+  margin: 0;
+}
+
+.ig-icon {
+  width: 1.15rem;
+  height: 1.15rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
 }
 
 /* ── Grid layouts ── */
