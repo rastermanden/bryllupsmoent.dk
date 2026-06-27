@@ -14,6 +14,21 @@
         <a href="#priser" @click.prevent="scrollTo('priser')">Priser</a>
         <a href="#kontakt" @click.prevent="scrollTo('kontakt')">Kontakt</a>
       </nav>
+      <div class="footer-social">
+        <a
+          href="https://www.instagram.com/bryllupsmoent"
+          target="_blank"
+          rel="noopener"
+          aria-label="Følg Bryllupsmønt på Instagram"
+        >
+          <svg class="ig-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <rect x="2.5" y="2.5" width="19" height="19" rx="5.5" />
+            <circle cx="12" cy="12" r="4.2" />
+            <circle cx="17.6" cy="6.4" r="1.3" fill="currentColor" stroke="none" />
+          </svg>
+          <span>Instagram</span>
+        </a>
+      </div>
       <p class="footer-company">
         Bryllupsmønt I/S · CVR 4645 3352 · <a href="mailto:kontakt@bryllupsmønt.dk">kontakt@bryllupsmønt.dk</a>
       </p>
@@ -85,6 +100,30 @@ footer {
 
 .footer-nav a:hover {
   color: var(--color-gold);
+}
+
+.footer-social a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: rgba(255,255,255,0.65);
+  text-decoration: none;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  transition: color 0.2s;
+}
+
+.footer-social a:hover {
+  color: var(--color-gold);
+}
+
+.footer-social .ig-icon {
+  width: 1.2rem;
+  height: 1.2rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
 }
 
 .footer-company {
