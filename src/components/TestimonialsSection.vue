@@ -31,24 +31,10 @@
 const testimonials = [
   {
     rating: 5,
-    quote: 'Møntprægningen var dagens store overraskelse! Vores gæster stod i kø for at præge deres egen mønt, og vi har nu et minde, vi vil bære med os for altid.',
-    initials: 'M&L',
-    name: 'Maria & Lasse',
-    detail: 'Bryllup i Aarhus'
-  },
-  {
-    rating: 5,
-    quote: 'Professionel service fra start til slut. Designet med vores navne og dato blev helt perfekt, og opsætningen forløb uden problemer.',
-    initials: 'S&J',
-    name: 'Sofie & Jonas',
-    detail: 'Bryllup på Fyn'
-  },
-  {
-    rating: 5,
-    quote: 'En helt unik idé, som både unge og ældre gæster elskede. Sølvmønten har fået en æresplads derhjemme – tusind tak for en fantastisk oplevelse!',
-    initials: 'C&A',
-    name: 'Camilla & Anders',
-    detail: 'Bryllup i København'
+    quote: 'comming soon',
+    initials: 'B&H',
+    name: 'Bjorn & Hedvig',
+    detail: ''
   }
 ]
 </script>

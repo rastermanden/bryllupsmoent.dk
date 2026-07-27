@@ -10,7 +10,7 @@
         Lav jeres egen bryllupsmønt.
       </p>
       <div class="hero-actions">
-        <a href="#priser" @click.prevent="scrollTo('priser')" class="btn btn-primary">Se Priser</a>
+        <a href="#priser" @click.prevent="scrollTo('priser')" class="btn btn-primary">Se Pakker</a>
         <a href="#om-os" @click.prevent="scrollTo('om-os')" class="btn btn-outline">Læs Mere</a>
       </div>
     </div>
