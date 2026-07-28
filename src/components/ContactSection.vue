@@ -9,15 +9,15 @@
         </p>
       </div>
       <div class="contact-wrapper">
-        <form class="contact-form" @submit.prevent="handleSubmit">
+        <form class="contact-form" @submit.prevent="handleSubmit" novalidate>
           <div class="form-row">
             <div class="form-group">
-              <label for="name">Navn *</label>
-              <input type="text" id="name" v-model="form.name" placeholder="Jeres navne" required />
+              <label for="name">Navn <span class="required-indicator" aria-hidden="true">*</span><span class="sr-only">(påkrævet)</span></label>
+              <input type="text" id="name" v-model="form.name" placeholder="Jeres navne" required aria-required="true" autocomplete="name" />
             </div>
             <div class="form-group">
-              <label for="email">Email *</label>
-              <input type="email" id="email" v-model="form.email" placeholder="email@eksempel.dk" required />
+              <label for="email">Email <span class="required-indicator" aria-hidden="true">*</span><span class="sr-only">(påkrævet)</span></label>
+              <input type="email" id="email" v-model="form.email" placeholder="email@eksempel.dk" required aria-required="true" autocomplete="email" />
             </div>
           </div>
           <div class="form-row">
@@ -34,7 +34,7 @@
             <label for="message">Besked</label>
             <textarea id="message" v-model="form.message" rows="5" placeholder="Fortæl os om jeres bryllup og ønsker..."></textarea>
           </div>
-          <div v-if="submitted" class="form-success">
+          <div v-if="submitted" class="form-success" role="alert" aria-live="polite">
             ✅ Tak! Din emailklient åbner nu — tryk blot Send for at sende beskeden.
           </div>
           <button v-else type="submit" class="btn btn-primary btn-full">
@@ -43,21 +43,21 @@
         </form>
         <div class="contact-info">
           <div class="contact-item">
-            <span class="contact-icon">📧</span>
+            <span class="contact-icon" aria-hidden="true">📧</span>
             <div>
               <strong>Email</strong>
               <a href="mailto:kontakt@bryllupsmønt.dk">kontakt@bryllupsmønt.dk</a>
             </div>
           </div>
           <div class="contact-item">
-            <span class="contact-icon">📍</span>
+            <span class="contact-icon" aria-hidden="true">📍</span>
             <div>
               <strong>Område</strong>
               <span>Hele Danmark</span>
             </div>
           </div>
           <div class="contact-item">
-            <span class="contact-icon">⏰</span>
+            <span class="contact-icon" aria-hidden="true">⏰</span>
             <div>
               <strong>Svartid</strong>
               <span>Inden for 24 timer</span>
@@ -149,6 +149,29 @@ input:focus, textarea:focus {
   outline: none;
   border-color: var(--color-gold);
   background: white;
+  box-shadow: 0 0 0 3px rgba(201, 168, 76, 0.25);
+}
+
+input:focus-visible, textarea:focus-visible {
+  outline: 3px solid var(--color-gold);
+  outline-offset: 2px;
+}
+
+.required-indicator {
+  color: #c0392b;
+  font-weight: 700;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 textarea {

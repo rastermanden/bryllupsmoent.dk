@@ -1,9 +1,9 @@
 <template>
   <section class="hero" id="hjem">
-    <div class="hero-bg"></div>
-    <div class="hero-overlay"></div>
+    <div class="hero-bg" aria-hidden="true"></div>
+    <div class="hero-overlay" aria-hidden="true"></div>
     <div class="container hero-content">
-      <div class="coin-decoration">⬡</div>
+      <div class="coin-decoration" aria-hidden="true">⬡</div>
       <h1>Din Personlige<br><span>Bryllupsmønt</span></h1>
       <p class="hero-subtitle">
         Skab et unikt og uforglemmeligt minde fra jeres store dag.<br>
@@ -14,7 +14,7 @@
         <a href="#om-os" @click.prevent="scrollTo('om-os')" class="btn btn-outline">Læs Mere</a>
       </div>
     </div>
-    <div class="hero-scroll">
+    <div class="hero-scroll" aria-hidden="true">
       <span>↓</span>
     </div>
   </section>

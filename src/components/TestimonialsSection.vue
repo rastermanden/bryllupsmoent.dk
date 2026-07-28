@@ -11,7 +11,7 @@
       <div class="testimonials-grid">
         <div class="testimonial-card" v-for="(testimonial, i) in testimonials" :key="i">
           <div class="stars" aria-label="5 ud af 5 stjerner">
-            <span v-for="n in testimonial.rating" :key="n">★</span>
+            <span v-for="n in testimonial.rating" :key="n" aria-hidden="true">★</span>
           </div>
           <p class="quote">"{{ testimonial.quote }}"</p>
           <div class="author">

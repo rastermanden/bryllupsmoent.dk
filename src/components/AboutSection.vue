@@ -11,7 +11,7 @@
       </div>
       <div class="about-grid">
         <div class="about-card" v-for="feature in features" :key="feature.title">
-          <div class="about-icon">{{ feature.icon }}</div>
+          <div class="about-icon" aria-hidden="true">{{ feature.icon }}</div>
           <h3>{{ feature.title }}</h3>
           <p>{{ feature.text }}</p>
         </div>
