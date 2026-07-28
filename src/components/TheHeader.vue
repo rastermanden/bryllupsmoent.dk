@@ -12,16 +12,24 @@ const closeMenu = () => {
   isMenuOpen.value = false
 }
 
+const handleKeydown = (e) => {
+  if (e.key === 'Escape' && isMenuOpen.value) {
+    closeMenu()
+  }
+}
+
 const handleScroll = () => {
   isScrolled.value = window.scrollY > 50
 }
 
 onMounted(() => {
   window.addEventListener('scroll', handleScroll)
+  window.addEventListener('keydown', handleKeydown)
 })
 
 onUnmounted(() => {
   window.removeEventListener('scroll', handleScroll)
+  window.removeEventListener('keydown', handleKeydown)
 })
 
 const scrollTo = (id) => {
@@ -37,11 +45,11 @@ const scrollTo = (id) => {
   <header :class="{ scrolled: isScrolled }">
     <div class="container header-inner">
       <a href="#" class="logo" @click.prevent="scrollTo('hjem')">
-        <span class="logo-icon">⬡</span>
+        <span class="logo-icon" aria-hidden="true">⬡</span>
         Bryllupsmønt
       </a>
 
-      <nav :class="{ open: isMenuOpen }">
+      <nav id="primary-nav" :class="{ open: isMenuOpen }" aria-label="Primær navigation">
         <ul>
           <li><a href="#hjem" @click.prevent="scrollTo('hjem')">Hjem</a></li>
           <li><a href="#om-os" @click.prevent="scrollTo('om-os')">Om Os</a></li>
@@ -57,6 +65,8 @@ const scrollTo = (id) => {
         :class="{ active: isMenuOpen }"
         @click="toggleMenu"
         aria-label="Menu"
+        :aria-expanded="isMenuOpen"
+        aria-controls="primary-nav"
       >
         <span></span>
         <span></span>

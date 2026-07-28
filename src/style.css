@@ -4,6 +4,7 @@
   --color-burgundy: #7c2d44;
   --color-gold: #c9a84c;
   --color-gold-light: #e8d49e;
+  --color-gold-dark: #725924;
   --color-cream: #faf8f5;
   --color-light: #f5f2ee;
   --color-dark: #1a0e14;
@@ -36,6 +37,56 @@ body {
   padding: 0 1.5rem;
 }
 
+/* ── Accessibility: skip link ── */
+.skip-link {
+  position: absolute;
+  top: -3rem;
+  left: 1rem;
+  z-index: 1000;
+  background: var(--color-dark);
+  color: white;
+  padding: 0.75rem 1.25rem;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: top 0.2s ease;
+}
+
+.skip-link:focus {
+  top: 1rem;
+}
+
+main:focus {
+  outline: none;
+}
+
+/* ── Accessibility: visible focus indicator ── */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+[tabindex]:focus-visible {
+  outline: 3px solid var(--color-gold);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* ── Accessibility: respect reduced motion preference ── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
+}
+
 .section {
   padding: 6rem 0;
 }
@@ -52,7 +103,7 @@ body {
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.15em;
-  color: var(--color-gold);
+  color: var(--color-gold-dark);
   margin-bottom: 0.75rem;
   border: 1px solid var(--color-gold-light);
   padding: 0.25rem 0.75rem;
@@ -91,7 +142,7 @@ body {
 
 .btn-primary {
   background: var(--color-gold);
-  color: white;
+  color: var(--color-dark);
   border-color: var(--color-gold);
 }
 

@@ -11,8 +11,9 @@ import TheFooter from './components/TheFooter.vue'
 </script>
 
 <template>
+  <a href="#main-content" class="skip-link">Spring til indhold</a>
   <TheHeader />
-  <main>
+  <main id="main-content" tabindex="-1">
     <TheHero />
     <AboutSection />
     <GallerySection />

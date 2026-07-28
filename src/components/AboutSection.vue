@@ -1,9 +1,9 @@
 <template>
-  <section class="section about" id="om-os">
+  <section class="section about" id="om-os" aria-labelledby="om-os-heading">
     <div class="container">
       <div class="section-header">
         <span class="section-label">Om Os</span>
-        <h2>En Tradition Med Et Moderne Twist</h2>
+        <h2 id="om-os-heading">En Tradition Med Et Moderne Twist</h2>
         <p class="section-intro">
           Vi specialiserer os i at skabe personlige mønter, der giver jeres bryllupsdag et unikt præg.
           Vores mobile møntprægningsmaskine kommer direkte til jeres bryllup.
@@ -11,7 +11,7 @@
       </div>
       <div class="about-grid">
         <div class="about-card" v-for="feature in features" :key="feature.title">
-          <div class="about-icon">{{ feature.icon }}</div>
+          <div class="about-icon" aria-hidden="true">{{ feature.icon }}</div>
           <h3>{{ feature.title }}</h3>
           <p>{{ feature.text }}</p>
         </div>

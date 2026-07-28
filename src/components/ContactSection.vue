@@ -1,9 +1,9 @@
 <template>
-  <section class="section contact" id="kontakt">
+  <section class="section contact" id="kontakt" aria-labelledby="kontakt-heading">
     <div class="container">
       <div class="section-header">
         <span class="section-label">Kontakt</span>
-        <h2>Lad Os Skabe Noget Særligt</h2>
+        <h2 id="kontakt-heading">Lad Os Skabe Noget Særligt</h2>
         <p class="section-intro">
           Udfyld formularen nedenfor, og vi vender tilbage inden for 24 timer.
         </p>
@@ -34,8 +34,8 @@
             <label for="message">Besked</label>
             <textarea id="message" v-model="form.message" rows="5" placeholder="Fortæl os om jeres bryllup og ønsker..."></textarea>
           </div>
-          <div v-if="submitted" class="form-success">
-            ✅ Tak! Din emailklient åbner nu — tryk blot Send for at sende beskeden.
+          <div v-if="submitted" class="form-success" role="status">
+            <span aria-hidden="true">✅</span> Tak! Din emailklient åbner nu — tryk blot Send for at sende beskeden.
           </div>
           <button v-else type="submit" class="btn btn-primary btn-full">
             Send Forespørgsel
@@ -43,21 +43,21 @@
         </form>
         <div class="contact-info">
           <div class="contact-item">
-            <span class="contact-icon">📧</span>
+            <span class="contact-icon" aria-hidden="true">📧</span>
             <div>
               <strong>Email</strong>
               <a href="mailto:kontakt@bryllupsmønt.dk">kontakt@bryllupsmønt.dk</a>
             </div>
           </div>
           <div class="contact-item">
-            <span class="contact-icon">📍</span>
+            <span class="contact-icon" aria-hidden="true">📍</span>
             <div>
               <strong>Område</strong>
               <span>Hele Danmark</span>
             </div>
           </div>
           <div class="contact-item">
-            <span class="contact-icon">⏰</span>
+            <span class="contact-icon" aria-hidden="true">⏰</span>
             <div>
               <strong>Svartid</strong>
               <span>Inden for 24 timer</span>
@@ -146,9 +146,13 @@ input, textarea {
 }
 
 input:focus, textarea:focus {
-  outline: none;
   border-color: var(--color-gold);
   background: white;
+}
+
+input:focus-visible, textarea:focus-visible {
+  outline: 3px solid var(--color-gold);
+  outline-offset: 2px;
 }
 
 textarea {

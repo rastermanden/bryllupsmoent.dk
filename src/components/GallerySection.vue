@@ -1,19 +1,22 @@
 <template>
-  <section class="section gallery" id="galleri">
+  <section class="section gallery" id="galleri" aria-labelledby="galleri-heading">
     <div class="container">
       <div class="section-header">
         <span class="section-label">I Aktion</span>
-        <h2>Se Det Ske</h2>
+        <h2 id="galleri-heading">Se Det Ske</h2>
         <p class="section-intro">
           Oplev processen med egne øjne – fra hammerslag til håndlavet minde.
         </p>
       </div>
 
       <div class="gallery-grid" :class="`gallery-grid--${images.length}`">
-        <div
+        <button
           v-for="(image, i) in images"
           :key="i"
+          ref="galleryButtons"
+          type="button"
           class="gallery-item"
+          :aria-label="`Se billede i fuld størrelse: ${image.alt}`"
           @click="openLightbox(i)"
         >
           <picture>
@@ -21,9 +24,9 @@
             <img :src="image.thumbJpg" :alt="image.alt" loading="lazy" decoding="async" />
           </picture>
           <div class="gallery-overlay">
-            <span class="gallery-zoom">⊕</span>
+            <span class="gallery-zoom" aria-hidden="true">⊕</span>
           </div>
-        </div>
+        </button>
       </div>
 
       <div class="gallery-cta">
@@ -46,21 +49,29 @@
 
     <!-- Lightbox -->
     <Teleport to="body">
-      <div v-if="lightboxIndex !== null" class="lightbox" @click.self="closeLightbox">
-        <button class="lightbox-close" @click="closeLightbox">✕</button>
-        <button v-if="images.length > 1" class="lightbox-prev" @click="prevImage">‹</button>
+      <div
+        v-if="lightboxIndex !== null"
+        class="lightbox"
+        role="dialog"
+        aria-modal="true"
+        aria-label="Billedvisning"
+        @click.self="closeLightbox"
+        @keydown="onLightboxKeydown"
+      >
+        <button ref="closeButton" class="lightbox-close" aria-label="Luk billedvisning" @click="closeLightbox">✕</button>
+        <button v-if="images.length > 1" class="lightbox-prev" aria-label="Forrige billede" @click="prevImage">‹</button>
         <picture>
           <source :srcset="images[lightboxIndex].fullWebp" type="image/webp" />
           <img :src="images[lightboxIndex].fullJpg" :alt="images[lightboxIndex].alt" class="lightbox-img" />
         </picture>
-        <button v-if="images.length > 1" class="lightbox-next" @click="nextImage">›</button>
+        <button v-if="images.length > 1" class="lightbox-next" aria-label="Næste billede" @click="nextImage">›</button>
       </div>
     </Teleport>
   </section>
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, nextTick, onMounted, onUnmounted } from 'vue'
 import galleryData from '../data/gallery.json'
 
 // Gallery images are configured in src/data/gallery.json — set "enabled" to
@@ -81,19 +92,26 @@ const images = galleryData
   }))
 
 const lightboxIndex = ref(null)
+const galleryButtons = ref([])
+const closeButton = ref(null)
 let _pushedState = false
+let _lastTrigger = null
 
 function openLightbox(i) {
+  _lastTrigger = galleryButtons.value[i] || null
   lightboxIndex.value = i
   document.body.style.overflow = 'hidden'
   history.pushState({ lightbox: true }, '')
   _pushedState = true
+  nextTick(() => closeButton.value?.focus())
 }
 
 function _closeImmediately() {
   lightboxIndex.value = null
   document.body.style.overflow = ''
   _pushedState = false
+  _lastTrigger?.focus()
+  _lastTrigger = null
 }
 
 function closeLightbox() {
@@ -112,6 +130,30 @@ function prevImage() {
 
 function nextImage() {
   lightboxIndex.value = (lightboxIndex.value + 1) % images.length
+}
+
+function onLightboxKeydown(e) {
+  if (e.key === 'Escape') {
+    e.stopPropagation()
+    closeLightbox()
+  } else if (e.key === 'ArrowLeft' && images.length > 1) {
+    prevImage()
+  } else if (e.key === 'ArrowRight' && images.length > 1) {
+    nextImage()
+  } else if (e.key === 'Tab') {
+    // Simple focus trap: cycle focus among the lightbox's buttons.
+    const focusables = e.currentTarget.querySelectorAll('button')
+    if (!focusables.length) return
+    const first = focusables[0]
+    const last = focusables[focusables.length - 1]
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault()
+      last.focus()
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault()
+      first.focus()
+    }
+  }
 }
 
 onMounted(() => window.addEventListener('popstate', onPopState))
@@ -191,6 +233,12 @@ onUnmounted(() => window.removeEventListener('popstate', onPopState))
   aspect-ratio: 3 / 4;
   box-shadow: 0 4px 20px rgba(0,0,0,0.08);
   background: var(--color-border);
+  border: none;
+  padding: 0;
+  width: 100%;
+  display: block;
+  font: inherit;
+  text-align: inherit;
 }
 
 .gallery-item img {

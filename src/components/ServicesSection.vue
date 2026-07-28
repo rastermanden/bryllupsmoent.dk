@@ -1,21 +1,21 @@
 <template>
-  <section class="section services" id="tjenester">
+  <section class="section services" id="tjenester" aria-labelledby="tjenester-heading">
     <div class="container">
       <div class="section-header">
         <span class="section-label">Tjenester</span>
-        <h2>Hvad Vi Tilbyder</h2>
+        <h2 id="tjenester-heading">Hvad Vi Tilbyder</h2>
         <p class="section-intro">
           Fra design til præg – vi håndterer alt, så I kan nyde jeres store dag.
         </p>
       </div>
       <div class="services-list">
         <div class="service-item" v-for="(service, i) in services" :key="i">
-          <div class="service-number">{{ String(i + 1).padStart(2, '0') }}</div>
+          <div class="service-number" aria-hidden="true">{{ String(i + 1).padStart(2, '0') }}</div>
           <div class="service-content">
             <h3>{{ service.title }}</h3>
             <p>{{ service.description }}</p>
           </div>
-          <div class="service-icon">{{ service.icon }}</div>
+          <div class="service-icon" aria-hidden="true">{{ service.icon }}</div>
         </div>
       </div>
     </div>
@@ -78,8 +78,8 @@ const services = [
   font-family: 'Playfair Display', Georgia, serif;
   font-size: 2.5rem;
   font-weight: 700;
-  color: var(--color-gold);
-  opacity: 0.4;
+  color: var(--color-gold-dark);
+  opacity: 0.8;
   min-width: 60px;
   line-height: 1;
 }

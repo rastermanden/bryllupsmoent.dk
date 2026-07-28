@@ -2,13 +2,13 @@
   <footer>
     <div class="container footer-inner">
       <div class="footer-brand">
-        <span class="logo-icon">⬡</span>
+        <span class="logo-icon" aria-hidden="true">⬡</span>
         <span class="brand-name">Bryllupsmønt</span>
       </div>
       <p class="footer-tagline">
         Unikke minder præget i metal – til jeres store dag.
       </p>
-      <nav class="footer-nav">
+      <nav class="footer-nav" aria-label="Bundtekst navigation">
         <a href="#hjem" @click.prevent="scrollTo('hjem')">Hjem</a>
         <a href="#om-os" @click.prevent="scrollTo('om-os')">Om Os</a>
         <a href="#priser" @click.prevent="scrollTo('priser')">Priser</a>
@@ -134,7 +134,8 @@ footer {
 
 .footer-company a {
   color: rgba(255,255,255,0.65);
-  text-decoration: none;
+  text-decoration: underline;
+  text-underline-offset: 2px;
 }
 
 .footer-company a:hover {
@@ -142,7 +143,7 @@ footer {
 }
 
 .footer-copy {
-  color: rgba(255,255,255,0.35);
+  color: rgba(255,255,255,0.6);
   font-size: 0.8rem;
   margin: 0;
   margin-top: 0.5rem;

@@ -1,17 +1,17 @@
 <template>
-  <section class="section testimonials" id="anmeldelser">
+  <section class="section testimonials" id="anmeldelser" aria-labelledby="anmeldelser-heading">
     <div class="container">
       <div class="section-header">
         <span class="section-label">Anmeldelser</span>
-        <h2>Hvad Vores Kunder Siger</h2>
+        <h2 id="anmeldelser-heading">Hvad Vores Kunder Siger</h2>
         <p class="section-intro">
           Vi er stolte af at have været en del af mange uforglemmelige bryllupper rundt om i Danmark.
         </p>
       </div>
       <div class="testimonials-grid">
         <div class="testimonial-card" v-for="(testimonial, i) in testimonials" :key="i">
-          <div class="stars" aria-label="5 ud af 5 stjerner">
-            <span v-for="n in testimonial.rating" :key="n">★</span>
+          <div class="stars" role="img" aria-label="5 ud af 5 stjerner">
+            <span v-for="n in testimonial.rating" :key="n" aria-hidden="true">★</span>
           </div>
           <p class="quote">"{{ testimonial.quote }}"</p>
           <div class="author">
@@ -106,7 +106,7 @@ const testimonials = [
   height: 44px;
   border-radius: 50%;
   background: var(--color-gold);
-  color: white;
+  color: var(--color-dark);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -127,7 +127,7 @@ const testimonials = [
 }
 
 .author-detail {
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(255, 255, 255, 0.75);
   font-size: 0.85rem;
 }
 
