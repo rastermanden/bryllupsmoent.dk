@@ -1,9 +1,9 @@
 <template>
-  <section class="section about" id="om-os">
+  <section class="section about" id="om-os" aria-labelledby="om-os-heading">
     <div class="container">
       <div class="section-header">
         <span class="section-label">Om Os</span>
-        <h2>En Tradition Med Et Moderne Twist</h2>
+        <h2 id="om-os-heading">En Tradition Med Et Moderne Twist</h2>
         <p class="section-intro">
           Vi specialiserer os i at skabe personlige mønter, der giver jeres bryllupsdag et unikt præg.
           Vores mobile møntprægningsmaskine kommer direkte til jeres bryllup.

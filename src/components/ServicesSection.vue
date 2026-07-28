@@ -1,9 +1,9 @@
 <template>
-  <section class="section services" id="tjenester">
+  <section class="section services" id="tjenester" aria-labelledby="tjenester-heading">
     <div class="container">
       <div class="section-header">
         <span class="section-label">Tjenester</span>
-        <h2>Hvad Vi Tilbyder</h2>
+        <h2 id="tjenester-heading">Hvad Vi Tilbyder</h2>
         <p class="section-intro">
           Fra design til præg – vi håndterer alt, så I kan nyde jeres store dag.
         </p>
@@ -78,8 +78,8 @@ const services = [
   font-family: 'Playfair Display', Georgia, serif;
   font-size: 2.5rem;
   font-weight: 700;
-  color: var(--color-gold);
-  opacity: 0.4;
+  color: var(--color-gold-dark);
+  opacity: 0.8;
   min-width: 60px;
   line-height: 1;
 }

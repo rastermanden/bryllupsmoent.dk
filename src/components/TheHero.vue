@@ -1,10 +1,10 @@
 <template>
-  <section class="hero" id="hjem">
+  <section class="hero" id="hjem" aria-labelledby="hjem-heading">
     <div class="hero-bg" aria-hidden="true"></div>
     <div class="hero-overlay" aria-hidden="true"></div>
     <div class="container hero-content">
       <div class="coin-decoration" aria-hidden="true">⬡</div>
-      <h1>Din Personlige<br><span>Bryllupsmønt</span></h1>
+      <h1 id="hjem-heading">Din Personlige<br><span>Bryllupsmønt</span></h1>
       <p class="hero-subtitle">
         Skab et unikt og uforglemmeligt minde fra jeres store dag.<br>
         Lav jeres egen bryllupsmønt.

@@ -146,7 +146,8 @@ footer {
 
 .footer-company a {
   color: rgba(255,255,255,0.8);
-  text-decoration: none;
+  text-decoration: underline;
+  text-underline-offset: 2px;
 }
 
 .footer-company a:hover {

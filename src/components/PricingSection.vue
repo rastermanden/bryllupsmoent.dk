@@ -1,9 +1,9 @@
 <template>
-  <section class="section pricing" id="priser">
+  <section class="section pricing" id="priser" aria-labelledby="priser-heading">
     <div class="container">
       <div class="section-header">
         <span class="section-label">Priser</span>
-        <h2>Vores Pakke</h2>
+        <h2 id="priser-heading">Vores Pakke</h2>
         <p class="section-intro">
           Alt hvad I behøver til en uforglemmelig bryllupsmøntoplevelse.
         </p>

@@ -1,9 +1,9 @@
 <template>
-  <section class="section gallery" id="galleri">
+  <section class="section gallery" id="galleri" aria-labelledby="galleri-heading">
     <div class="container">
       <div class="section-header">
         <span class="section-label">I Aktion</span>
-        <h2>Se Det Ske</h2>
+        <h2 id="galleri-heading">Se Det Ske</h2>
         <p class="section-intro">
           Oplev processen med egne øjne – fra hammerslag til håndlavet minde.
         </p>
@@ -13,10 +13,10 @@
         <button
           v-for="(image, i) in images"
           :key="i"
-          class="gallery-item"
-          @click="openLightbox(i)"
-          :aria-label="`Åbn billede: ${image.alt}`"
           type="button"
+          class="gallery-item"
+          :aria-label="`Se billede i fuld størrelse: ${image.alt}`"
+          @click="openLightbox(i)"
         >
           <picture>
             <source :srcset="image.thumbWebp" type="image/webp" />
@@ -56,22 +56,10 @@
         aria-modal="true"
         :aria-label="`Billedvisning: ${images[lightboxIndex].alt}`"
         @click.self="closeLightbox"
-        ref="lightboxEl"
+        @keydown="onLightboxKeydown"
       >
-        <button
-          class="lightbox-close"
-          @click="closeLightbox"
-          aria-label="Luk billedvisning"
-          type="button"
-          ref="lightboxCloseBtn"
-        >✕</button>
-        <button
-          v-if="images.length > 1"
-          class="lightbox-prev"
-          @click="prevImage"
-          aria-label="Forrige billede"
-          type="button"
-        >‹</button>
+        <button ref="closeButton" class="lightbox-close" type="button" aria-label="Luk billedvisning" @click="closeLightbox">✕</button>
+        <button v-if="images.length > 1" class="lightbox-prev" type="button" aria-label="Forrige billede" @click="prevImage">‹</button>
         <picture>
           <source :srcset="images[lightboxIndex].fullWebp" type="image/webp" />
           <img
@@ -80,13 +68,7 @@
             class="lightbox-img"
           />
         </picture>
-        <button
-          v-if="images.length > 1"
-          class="lightbox-next"
-          @click="nextImage"
-          aria-label="Næste billede"
-          type="button"
-        >›</button>
+        <button v-if="images.length > 1" class="lightbox-next" type="button" aria-label="Næste billede" @click="nextImage">›</button>
       </div>
     </Teleport>
   </section>
@@ -114,30 +96,25 @@ const images = galleryData
   }))
 
 const lightboxIndex = ref(null)
-const lightboxEl = ref(null)
-const lightboxCloseBtn = ref(null)
+const closeButton = ref(null)
 let _pushedState = false
-let _triggerEl = null
+let _lastTrigger = null
 
 function openLightbox(i) {
-  _triggerEl = document.activeElement
+  _lastTrigger = document.activeElement
   lightboxIndex.value = i
   document.body.style.overflow = 'hidden'
   history.pushState({ lightbox: true }, '')
   _pushedState = true
-  nextTick(() => {
-    if (lightboxCloseBtn.value) lightboxCloseBtn.value.focus()
-  })
+  nextTick(() => closeButton.value?.focus())
 }
 
 function _closeImmediately() {
   lightboxIndex.value = null
   document.body.style.overflow = ''
   _pushedState = false
-  if (_triggerEl) {
-    _triggerEl.focus()
-    _triggerEl = null
-  }
+  _lastTrigger?.focus()
+  _lastTrigger = null
 }
 
 function closeLightbox() {
@@ -158,25 +135,32 @@ function nextImage() {
   lightboxIndex.value = (lightboxIndex.value + 1) % images.length
 }
 
-function handleLightboxKeydown(e) {
-  if (lightboxIndex.value === null) return
+function onLightboxKeydown(e) {
   if (e.key === 'Escape') {
+    e.stopPropagation()
     closeLightbox()
-  } else if (e.key === 'ArrowLeft') {
+  } else if (e.key === 'ArrowLeft' && images.length > 1) {
     prevImage()
-  } else if (e.key === 'ArrowRight') {
+  } else if (e.key === 'ArrowRight' && images.length > 1) {
     nextImage()
+  } else if (e.key === 'Tab') {
+    // Simple focus trap: cycle focus among the lightbox's buttons.
+    const focusables = e.currentTarget.querySelectorAll('button')
+    if (!focusables.length) return
+    const first = focusables[0]
+    const last = focusables[focusables.length - 1]
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault()
+      last.focus()
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault()
+      first.focus()
+    }
   }
 }
 
-onMounted(() => {
-  window.addEventListener('popstate', onPopState)
-  document.addEventListener('keydown', handleLightboxKeydown)
-})
-onUnmounted(() => {
-  window.removeEventListener('popstate', onPopState)
-  document.removeEventListener('keydown', handleLightboxKeydown)
-})
+onMounted(() => window.addEventListener('popstate', onPopState))
+onUnmounted(() => window.removeEventListener('popstate', onPopState))
 </script>
 
 <style scoped>
@@ -254,6 +238,10 @@ onUnmounted(() => {
   background: var(--color-border);
   border: none;
   padding: 0;
+  width: 100%;
+  display: block;
+  font: inherit;
+  text-align: inherit;
 }
 
 .gallery-item img {

@@ -1,9 +1,9 @@
 <template>
-  <section class="section contact" id="kontakt">
+  <section class="section contact" id="kontakt" aria-labelledby="kontakt-heading">
     <div class="container">
       <div class="section-header">
         <span class="section-label">Kontakt</span>
-        <h2>Lad Os Skabe Noget Særligt</h2>
+        <h2 id="kontakt-heading">Lad Os Skabe Noget Særligt</h2>
         <p class="section-intro">
           Udfyld formularen nedenfor, og vi vender tilbage inden for 24 timer.
         </p>
@@ -34,8 +34,8 @@
             <label for="message">Besked</label>
             <textarea id="message" v-model="form.message" rows="5" placeholder="Fortæl os om jeres bryllup og ønsker..."></textarea>
           </div>
-          <div v-if="submitted" class="form-success" role="alert" aria-live="polite">
-            ✅ Tak! Din emailklient åbner nu — tryk blot Send for at sende beskeden.
+          <div v-if="submitted" class="form-success" role="status">
+            <span aria-hidden="true">✅</span> Tak! Din emailklient åbner nu — tryk blot Send for at sende beskeden.
           </div>
           <button v-else type="submit" class="btn btn-primary btn-full">
             Send Forespørgsel
@@ -146,7 +146,6 @@ input, textarea {
 }
 
 input:focus, textarea:focus {
-  outline: none;
   border-color: var(--color-gold);
   background: white;
   box-shadow: 0 0 0 3px rgba(201, 168, 76, 0.25);

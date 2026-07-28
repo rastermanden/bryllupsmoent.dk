@@ -13,7 +13,7 @@ import TheFooter from './components/TheFooter.vue'
 <template>
   <a href="#main-content" class="skip-link">Spring til indhold</a>
   <TheHeader />
-  <main id="main-content">
+  <main id="main-content" tabindex="-1">
     <TheHero />
     <AboutSection />
     <GallerySection />

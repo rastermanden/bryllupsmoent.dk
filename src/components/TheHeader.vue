@@ -12,24 +12,24 @@ const closeMenu = () => {
   isMenuOpen.value = false
 }
 
-const handleScroll = () => {
-  isScrolled.value = window.scrollY > 50
-}
-
 const handleKeydown = (e) => {
   if (e.key === 'Escape' && isMenuOpen.value) {
     closeMenu()
   }
 }
 
+const handleScroll = () => {
+  isScrolled.value = window.scrollY > 50
+}
+
 onMounted(() => {
   window.addEventListener('scroll', handleScroll)
-  document.addEventListener('keydown', handleKeydown)
+  window.addEventListener('keydown', handleKeydown)
 })
 
 onUnmounted(() => {
   window.removeEventListener('scroll', handleScroll)
-  document.removeEventListener('keydown', handleKeydown)
+  window.removeEventListener('keydown', handleKeydown)
 })
 
 const scrollTo = (id) => {
@@ -49,7 +49,7 @@ const scrollTo = (id) => {
         Bryllupsmønt
       </a>
 
-      <nav aria-label="Primær navigation" :class="{ open: isMenuOpen }" id="primary-nav">
+      <nav id="primary-nav" :class="{ open: isMenuOpen }" aria-label="Primær navigation">
         <ul>
           <li><a href="#hjem" @click.prevent="scrollTo('hjem')">Hjem</a></li>
           <li><a href="#om-os" @click.prevent="scrollTo('om-os')">Om Os</a></li>
