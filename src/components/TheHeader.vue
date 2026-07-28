@@ -16,12 +16,20 @@ const handleScroll = () => {
   isScrolled.value = window.scrollY > 50
 }
 
+const handleKeydown = (e) => {
+  if (e.key === 'Escape' && isMenuOpen.value) {
+    closeMenu()
+  }
+}
+
 onMounted(() => {
   window.addEventListener('scroll', handleScroll)
+  document.addEventListener('keydown', handleKeydown)
 })
 
 onUnmounted(() => {
   window.removeEventListener('scroll', handleScroll)
+  document.removeEventListener('keydown', handleKeydown)
 })
 
 const scrollTo = (id) => {
@@ -36,12 +44,12 @@ const scrollTo = (id) => {
 <template>
   <header :class="{ scrolled: isScrolled }">
     <div class="container header-inner">
-      <a href="#" class="logo" @click.prevent="scrollTo('hjem')">
-        <span class="logo-icon">⬡</span>
+      <a href="#hjem" class="logo" @click.prevent="scrollTo('hjem')" aria-label="Bryllupsmønt – gå til forsiden">
+        <span class="logo-icon" aria-hidden="true">⬡</span>
         Bryllupsmønt
       </a>
 
-      <nav :class="{ open: isMenuOpen }">
+      <nav aria-label="Primær navigation" :class="{ open: isMenuOpen }" id="primary-nav">
         <ul>
           <li><a href="#hjem" @click.prevent="scrollTo('hjem')">Hjem</a></li>
           <li><a href="#om-os" @click.prevent="scrollTo('om-os')">Om Os</a></li>
@@ -56,11 +64,13 @@ const scrollTo = (id) => {
         class="burger"
         :class="{ active: isMenuOpen }"
         @click="toggleMenu"
-        aria-label="Menu"
+        :aria-expanded="isMenuOpen"
+        aria-controls="primary-nav"
+        :aria-label="isMenuOpen ? 'Luk menu' : 'Åbn menu'"
       >
-        <span></span>
-        <span></span>
-        <span></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
       </button>
     </div>
   </header>
@@ -133,6 +143,24 @@ header.scrolled nav a {
 
 nav a:hover {
   color: var(--color-gold);
+}
+
+nav a:focus-visible {
+  outline: 3px solid var(--color-gold);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+.logo:focus-visible {
+  outline: 3px solid var(--color-gold);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.burger:focus-visible {
+  outline: 3px solid var(--color-gold);
+  outline-offset: 4px;
+  border-radius: 4px;
 }
 
 .burger {

@@ -10,20 +10,22 @@
       </div>
 
       <div class="gallery-grid" :class="`gallery-grid--${images.length}`">
-        <div
+        <button
           v-for="(image, i) in images"
           :key="i"
           class="gallery-item"
           @click="openLightbox(i)"
+          :aria-label="`Åbn billede: ${image.alt}`"
+          type="button"
         >
           <picture>
             <source :srcset="image.thumbWebp" type="image/webp" />
             <img :src="image.thumbJpg" :alt="image.alt" loading="lazy" decoding="async" />
           </picture>
-          <div class="gallery-overlay">
+          <div class="gallery-overlay" aria-hidden="true">
             <span class="gallery-zoom">⊕</span>
           </div>
-        </div>
+        </button>
       </div>
 
       <div class="gallery-cta">
@@ -32,7 +34,8 @@
           class="btn btn-outline-dark"
           href="https://www.instagram.com/bryllupsmoent"
           target="_blank"
-          rel="noopener"
+          rel="noopener noreferrer"
+          aria-label="Følg Bryllupsmønt på Instagram (åbner i nyt vindue)"
         >
           <svg class="ig-icon" viewBox="0 0 24 24" aria-hidden="true">
             <rect x="2.5" y="2.5" width="19" height="19" rx="5.5" />
@@ -46,21 +49,51 @@
 
     <!-- Lightbox -->
     <Teleport to="body">
-      <div v-if="lightboxIndex !== null" class="lightbox" @click.self="closeLightbox">
-        <button class="lightbox-close" @click="closeLightbox">✕</button>
-        <button v-if="images.length > 1" class="lightbox-prev" @click="prevImage">‹</button>
+      <div
+        v-if="lightboxIndex !== null"
+        class="lightbox"
+        role="dialog"
+        aria-modal="true"
+        :aria-label="`Billedvisning: ${images[lightboxIndex].alt}`"
+        @click.self="closeLightbox"
+        ref="lightboxEl"
+      >
+        <button
+          class="lightbox-close"
+          @click="closeLightbox"
+          aria-label="Luk billedvisning"
+          type="button"
+          ref="lightboxCloseBtn"
+        >✕</button>
+        <button
+          v-if="images.length > 1"
+          class="lightbox-prev"
+          @click="prevImage"
+          aria-label="Forrige billede"
+          type="button"
+        >‹</button>
         <picture>
           <source :srcset="images[lightboxIndex].fullWebp" type="image/webp" />
-          <img :src="images[lightboxIndex].fullJpg" :alt="images[lightboxIndex].alt" class="lightbox-img" />
+          <img
+            :src="images[lightboxIndex].fullJpg"
+            :alt="images[lightboxIndex].alt"
+            class="lightbox-img"
+          />
         </picture>
-        <button v-if="images.length > 1" class="lightbox-next" @click="nextImage">›</button>
+        <button
+          v-if="images.length > 1"
+          class="lightbox-next"
+          @click="nextImage"
+          aria-label="Næste billede"
+          type="button"
+        >›</button>
       </div>
     </Teleport>
   </section>
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, nextTick, onMounted, onUnmounted } from 'vue'
 import galleryData from '../data/gallery.json'
 
 // Gallery images are configured in src/data/gallery.json — set "enabled" to
@@ -81,19 +114,30 @@ const images = galleryData
   }))
 
 const lightboxIndex = ref(null)
+const lightboxEl = ref(null)
+const lightboxCloseBtn = ref(null)
 let _pushedState = false
+let _triggerEl = null
 
 function openLightbox(i) {
+  _triggerEl = document.activeElement
   lightboxIndex.value = i
   document.body.style.overflow = 'hidden'
   history.pushState({ lightbox: true }, '')
   _pushedState = true
+  nextTick(() => {
+    if (lightboxCloseBtn.value) lightboxCloseBtn.value.focus()
+  })
 }
 
 function _closeImmediately() {
   lightboxIndex.value = null
   document.body.style.overflow = ''
   _pushedState = false
+  if (_triggerEl) {
+    _triggerEl.focus()
+    _triggerEl = null
+  }
 }
 
 function closeLightbox() {
@@ -114,8 +158,25 @@ function nextImage() {
   lightboxIndex.value = (lightboxIndex.value + 1) % images.length
 }
 
-onMounted(() => window.addEventListener('popstate', onPopState))
-onUnmounted(() => window.removeEventListener('popstate', onPopState))
+function handleLightboxKeydown(e) {
+  if (lightboxIndex.value === null) return
+  if (e.key === 'Escape') {
+    closeLightbox()
+  } else if (e.key === 'ArrowLeft') {
+    prevImage()
+  } else if (e.key === 'ArrowRight') {
+    nextImage()
+  }
+}
+
+onMounted(() => {
+  window.addEventListener('popstate', onPopState)
+  document.addEventListener('keydown', handleLightboxKeydown)
+})
+onUnmounted(() => {
+  window.removeEventListener('popstate', onPopState)
+  document.removeEventListener('keydown', handleLightboxKeydown)
+})
 </script>
 
 <style scoped>
@@ -191,6 +252,8 @@ onUnmounted(() => window.removeEventListener('popstate', onPopState))
   aspect-ratio: 3 / 4;
   box-shadow: 0 4px 20px rgba(0,0,0,0.08);
   background: var(--color-border);
+  border: none;
+  padding: 0;
 }
 
 .gallery-item img {
@@ -218,6 +281,11 @@ onUnmounted(() => window.removeEventListener('popstate', onPopState))
 
 .gallery-item:hover .gallery-overlay {
   opacity: 1;
+}
+
+.gallery-item:focus-visible {
+  outline: 3px solid var(--color-gold);
+  outline-offset: 3px;
 }
 
 .gallery-zoom {
@@ -269,6 +337,13 @@ onUnmounted(() => window.removeEventListener('popstate', onPopState))
 .lightbox-prev:hover,
 .lightbox-next:hover {
   background: rgba(255,255,255,0.25);
+}
+
+.lightbox-close:focus-visible,
+.lightbox-prev:focus-visible,
+.lightbox-next:focus-visible {
+  outline: 3px solid white;
+  outline-offset: 3px;
 }
 
 .lightbox-close {

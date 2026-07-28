@@ -10,12 +10,12 @@
       </div>
       <div class="services-list">
         <div class="service-item" v-for="(service, i) in services" :key="i">
-          <div class="service-number">{{ String(i + 1).padStart(2, '0') }}</div>
+          <div class="service-number" aria-hidden="true">{{ String(i + 1).padStart(2, '0') }}</div>
           <div class="service-content">
             <h3>{{ service.title }}</h3>
             <p>{{ service.description }}</p>
           </div>
-          <div class="service-icon">{{ service.icon }}</div>
+          <div class="service-icon" aria-hidden="true">{{ service.icon }}</div>
         </div>
       </div>
     </div>

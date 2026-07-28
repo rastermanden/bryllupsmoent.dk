@@ -11,12 +11,12 @@
       <div class="pricing-single">
         <div class="pricing-card featured">
           <div class="pricing-header">
-            <span class="plan-icon">🪙</span>
+            <span class="plan-icon" aria-hidden="true">🪙</span>
             <h3>Bryllupsmønt</h3>
           </div>
           <ul class="plan-features">
             <li v-for="feature in features" :key="feature">
-              <span class="check">✓</span> {{ feature }}
+              <span class="check" aria-hidden="true">✓</span> {{ feature }}
             </li>
           </ul>
           <a href="#kontakt" @click.prevent="scrollTo('kontakt')" class="btn btn-primary">
