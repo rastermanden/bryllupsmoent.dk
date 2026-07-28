@@ -8,7 +8,7 @@
       <p class="footer-tagline">
         Unikke minder præget i metal – til jeres store dag.
       </p>
-      <nav class="footer-nav" aria-label="Bundtekst navigation">
+      <nav class="footer-nav" aria-label="Fodsidenavigation">
         <a href="#hjem" @click.prevent="scrollTo('hjem')">Hjem</a>
         <a href="#om-os" @click.prevent="scrollTo('om-os')">Om Os</a>
         <a href="#priser" @click.prevent="scrollTo('priser')">Priser</a>
@@ -18,8 +18,8 @@
         <a
           href="https://www.instagram.com/bryllupsmoent"
           target="_blank"
-          rel="noopener"
-          aria-label="Følg Bryllupsmønt på Instagram"
+          rel="noopener noreferrer"
+          aria-label="Følg Bryllupsmønt på Instagram (åbner i nyt vindue)"
         >
           <svg class="ig-icon" viewBox="0 0 24 24" aria-hidden="true">
             <rect x="2.5" y="2.5" width="19" height="19" rx="5.5" />
@@ -76,7 +76,7 @@ footer {
 }
 
 .footer-tagline {
-  color: rgba(255,255,255,0.55);
+  color: rgba(255,255,255,0.7);
   font-size: 0.9rem;
   font-style: italic;
   margin: 0;
@@ -90,7 +90,7 @@ footer {
 }
 
 .footer-nav a {
-  color: rgba(255,255,255,0.65);
+  color: rgba(255,255,255,0.8);
   text-decoration: none;
   font-size: 0.9rem;
   text-transform: uppercase;
@@ -102,11 +102,17 @@ footer {
   color: var(--color-gold);
 }
 
+.footer-nav a:focus-visible {
+  outline: 3px solid var(--color-gold);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
 .footer-social a {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  color: rgba(255,255,255,0.65);
+  color: rgba(255,255,255,0.8);
   text-decoration: none;
   font-size: 0.9rem;
   text-transform: uppercase;
@@ -118,6 +124,12 @@ footer {
   color: var(--color-gold);
 }
 
+.footer-social a:focus-visible {
+  outline: 3px solid var(--color-gold);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
 .footer-social .ig-icon {
   width: 1.2rem;
   height: 1.2rem;
@@ -127,13 +139,13 @@ footer {
 }
 
 .footer-company {
-  color: rgba(255,255,255,0.55);
+  color: rgba(255,255,255,0.7);
   font-size: 0.85rem;
   margin: 0;
 }
 
 .footer-company a {
-  color: rgba(255,255,255,0.65);
+  color: rgba(255,255,255,0.8);
   text-decoration: underline;
   text-underline-offset: 2px;
 }
@@ -142,8 +154,14 @@ footer {
   color: var(--color-gold);
 }
 
+.footer-company a:focus-visible {
+  outline: 3px solid var(--color-gold);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
 .footer-copy {
-  color: rgba(255,255,255,0.6);
+  color: rgba(255,255,255,0.55);
   font-size: 0.8rem;
   margin: 0;
   margin-top: 0.5rem;

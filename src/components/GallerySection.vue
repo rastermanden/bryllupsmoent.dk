@@ -13,7 +13,6 @@
         <button
           v-for="(image, i) in images"
           :key="i"
-          ref="galleryButtons"
           type="button"
           class="gallery-item"
           :aria-label="`Se billede i fuld størrelse: ${image.alt}`"
@@ -23,8 +22,8 @@
             <source :srcset="image.thumbWebp" type="image/webp" />
             <img :src="image.thumbJpg" :alt="image.alt" loading="lazy" decoding="async" />
           </picture>
-          <div class="gallery-overlay">
-            <span class="gallery-zoom" aria-hidden="true">⊕</span>
+          <div class="gallery-overlay" aria-hidden="true">
+            <span class="gallery-zoom">⊕</span>
           </div>
         </button>
       </div>
@@ -35,7 +34,8 @@
           class="btn btn-outline-dark"
           href="https://www.instagram.com/bryllupsmoent"
           target="_blank"
-          rel="noopener"
+          rel="noopener noreferrer"
+          aria-label="Følg Bryllupsmønt på Instagram (åbner i nyt vindue)"
         >
           <svg class="ig-icon" viewBox="0 0 24 24" aria-hidden="true">
             <rect x="2.5" y="2.5" width="19" height="19" rx="5.5" />
@@ -54,17 +54,21 @@
         class="lightbox"
         role="dialog"
         aria-modal="true"
-        aria-label="Billedvisning"
+        :aria-label="`Billedvisning: ${images[lightboxIndex].alt}`"
         @click.self="closeLightbox"
         @keydown="onLightboxKeydown"
       >
-        <button ref="closeButton" class="lightbox-close" aria-label="Luk billedvisning" @click="closeLightbox">✕</button>
-        <button v-if="images.length > 1" class="lightbox-prev" aria-label="Forrige billede" @click="prevImage">‹</button>
+        <button ref="closeButton" class="lightbox-close" type="button" aria-label="Luk billedvisning" @click="closeLightbox">✕</button>
+        <button v-if="images.length > 1" class="lightbox-prev" type="button" aria-label="Forrige billede" @click="prevImage">‹</button>
         <picture>
           <source :srcset="images[lightboxIndex].fullWebp" type="image/webp" />
-          <img :src="images[lightboxIndex].fullJpg" :alt="images[lightboxIndex].alt" class="lightbox-img" />
+          <img
+            :src="images[lightboxIndex].fullJpg"
+            :alt="images[lightboxIndex].alt"
+            class="lightbox-img"
+          />
         </picture>
-        <button v-if="images.length > 1" class="lightbox-next" aria-label="Næste billede" @click="nextImage">›</button>
+        <button v-if="images.length > 1" class="lightbox-next" type="button" aria-label="Næste billede" @click="nextImage">›</button>
       </div>
     </Teleport>
   </section>
@@ -92,13 +96,12 @@ const images = galleryData
   }))
 
 const lightboxIndex = ref(null)
-const galleryButtons = ref([])
 const closeButton = ref(null)
 let _pushedState = false
 let _lastTrigger = null
 
 function openLightbox(i) {
-  _lastTrigger = galleryButtons.value[i] || null
+  _lastTrigger = document.activeElement
   lightboxIndex.value = i
   document.body.style.overflow = 'hidden'
   history.pushState({ lightbox: true }, '')
@@ -268,6 +271,11 @@ onUnmounted(() => window.removeEventListener('popstate', onPopState))
   opacity: 1;
 }
 
+.gallery-item:focus-visible {
+  outline: 3px solid var(--color-gold);
+  outline-offset: 3px;
+}
+
 .gallery-zoom {
   color: white;
   font-size: 2.5rem;
@@ -317,6 +325,13 @@ onUnmounted(() => window.removeEventListener('popstate', onPopState))
 .lightbox-prev:hover,
 .lightbox-next:hover {
   background: rgba(255,255,255,0.25);
+}
+
+.lightbox-close:focus-visible,
+.lightbox-prev:focus-visible,
+.lightbox-next:focus-visible {
+  outline: 3px solid white;
+  outline-offset: 3px;
 }
 
 .lightbox-close {
